@@ -250,9 +250,6 @@
     <!--end::Root-->
 @endsection
 @section('scripts')
-    <!--begin::Custom Javascript(used for this page only)-->
-    <script src="{{ asset('assets/js/custom/authentication/sign-in/general.js') }}"></script>
-    <!--end::Custom Javascript-->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const usernameInput = document.getElementById('usernameInput');
