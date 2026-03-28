@@ -15,7 +15,7 @@ License: For each use you must have a valid license purchased only from above li
 
 <head>
     <base href="{{ url('/') }}/">
-    <title>{{ trim($__env->yieldContent('title')) ?: getPageTitle() }} - Metronic 832</title>
+    <title>{{ trim($__env->yieldContent('title')) ?: getPageTitle() }} - Maindra KCD9</title>
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="description"
