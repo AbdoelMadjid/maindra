@@ -14,9 +14,49 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = ['guru', 'tatausaha', 'siswa', 'admin', 'master'];
+        $users = [
+            'master',
+            'admin',
+            'kepalakcd',
+            'kasubag',
+            'pengawas',
+            'stafkesiswaan',
+            'stafkurikulum',
+            'stafhumas',
+            'stafsapras',
+            'stafketatausahaan',
+            'stafdapodik',
+            'stafbos',
+            'stafbopd',
+            'stafgaji',
+            'stafkepeg',
+            'stafabsen',
+            'stafpendataan',
+            'stafpersuratan',
+            'stafaplikasi',
+            'kepalasekolah',
+            'wakasis',
+            'wakakur',
+            'wakahumas',
+            'wakasapras',
+            'kepalatu',
+            'opskesiswaan',
+            'opskurikulum',
+            'opshumas',
+            'opssapras',
+            'opsketatausahaan',
+            'opsdapodik',
+            'opsbos',
+            'opsbopd',
+            'opsgaji',
+            'opskepeg',
+            'opsabsen',
+            'opspendataan',
+            'opspersuratan',
+            'opsaplikasi',
+        ];
         $default = [
-            'password' => bcrypt('password'),
+            'password' => bcrypt('maindrakcd9'),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10)
         ];
@@ -25,7 +65,7 @@ class UserSeeder extends Seeder
             User::create([...$default, ...[
                 'name' => Str::title($value),
                 'username' => $value,
-                'email' => $value . '@gmail.com',
+                'email' => $value . '@maindra.com',
             ]])->assignRole($value);
         }
     }

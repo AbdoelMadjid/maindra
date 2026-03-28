@@ -4,9 +4,7 @@ $categoryFiles = glob(__DIR__ . '/menu_seeder/*_seeder.php') ?: [];
 
 // Atur urutan file seeder secara manual sesuai kebutuhan.
 $seederFileOrder = [
-    'identitaspengguna_seeder.php',
     'masterdata_seeder.php',
-    'perangkatsekolah_seeder.php',
 ];
 $seederFilePriority = array_flip($seederFileOrder);
 

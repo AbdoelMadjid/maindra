@@ -1,4 +1,7 @@
 @extends('layouts.index', ['CreativeLayout' => true])
+@section('styles')
+    <link href="{{ asset('assets/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet" type="text/css" />
+@endsection
 @section('content')
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root" id="kt_app_root">
@@ -45,8 +48,9 @@
                     <!--begin::Wrapper-->
                     <div class="d-flex flex-center flex-column flex-column-fluid px-lg-10 pb-15 pb-lg-20">
                         <!--begin::Form-->
-                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="{{ route('login') }}"
-                            method="POST">
+                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"
+                            action="{{ route('login') }}" method="POST"
+                            data-has-server-errors="{{ $errors->any() ? '1' : '0' }}">
                             @php
                                 $usernameHasError = $errors->has('username');
                                 $passwordHasError = $errors->has('password');
@@ -103,17 +107,13 @@
                                     class="form-control bg-transparent @if ($passwordHasError) is-invalid @endif"
                                     style="padding-right: 44px;" />
                                 <button type="button" id="togglePassword"
-                                    class="btn border-0 shadow-none bg-transparent position-absolute"
+                                    class="btn border-0 shadow-none bg-transparent position-absolute @if ($errors->any()) d-none @endif"
                                     style="right: 6px; top: 50%; transform: translateY(-50%); z-index: 3; padding: 4px;"
                                     aria-label="Toggle password visibility">
-                                    <i id="togglePasswordIconOff" class="ki-duotone ki-eye-slash fs-2 password-toggle-icon">
-                                        <span class="path1"></span><span class="path2"></span><span class="path3"></span><span
-                                            class="path4"></span>
-                                    </i>
+                                    <i id="togglePasswordIconOff"
+                                        class="bi bi-eye-slash fs-4 password-toggle-icon"></i>
                                     <i id="togglePasswordIconOn"
-                                        class="ki-duotone ki-eye fs-2 d-none password-toggle-icon">
-                                        <span class="path1"></span><span class="path2"></span><span class="path3"></span>
-                                    </i>
+                                        class="bi bi-eye fs-4 d-none password-toggle-icon"></i>
                                 </button>
                                 <!--end::Password-->
                                 <div id="passwordFieldError"
@@ -277,15 +277,31 @@
                 });
             }
 
+            function updatePasswordToggleVisibility() {
+                if (!togglePassword) {
+                    return;
+                }
+
+                const hasServerErrors = form.dataset.hasServerErrors === '1';
+                const hasInlineErrors = usernameInput.classList.contains('is-invalid') ||
+                    passwordInput.classList.contains('is-invalid') ||
+                    usernameFieldError.classList.contains('d-block') ||
+                    passwordFieldError.classList.contains('d-block');
+
+                togglePassword.classList.toggle('d-none', hasServerErrors || hasInlineErrors);
+            }
+
             function setFieldError(input, feedback, message) {
                 input.classList.add('is-invalid');
                 feedback.textContent = message;
                 feedback.classList.add('d-block');
+                updatePasswordToggleVisibility();
             }
 
             function clearFieldError(input, feedback) {
                 input.classList.remove('is-invalid');
                 feedback.classList.remove('d-block');
+                updatePasswordToggleVisibility();
             }
 
             function validateUsernameInline() {
@@ -321,6 +337,8 @@
                     e.preventDefault();
                 }
             });
+
+            updatePasswordToggleVisibility();
         });
     </script>
 @endsection
