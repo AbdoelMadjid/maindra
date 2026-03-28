@@ -30,6 +30,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:'.User::class],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => [
                 'required',
@@ -57,6 +58,9 @@ class RegisteredUserController extends Controller
             'name.required' => __('auth.validation.name_required'),
             'name.string' => __('auth.validation.name_string'),
             'name.max' => __('auth.validation.name_max', ['max' => 255]),
+            'username.required' => __('auth.validation.username_required'),
+            'username.max' => __('auth.validation.username_max', ['max' => 255]),
+            'username.unique' => __('auth.validation.username_unique'),
             'email.required' => __('auth.validation.email_required'),
             'email.email' => __('auth.validation.email_email'),
             'email.max' => __('auth.validation.email_max', ['max' => 255]),
@@ -68,6 +72,7 @@ class RegisteredUserController extends Controller
 
         $user = User::create([
             'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
@@ -79,4 +84,3 @@ class RegisteredUserController extends Controller
         return redirect(route('homepage', absolute: false));
     }
 }
-

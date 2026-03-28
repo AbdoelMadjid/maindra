@@ -117,6 +117,8 @@ return [
     'contacts_intro' => 'Our team is happy to answer your sales questions. Fill out the form and we will be in touch as soon as possible.',
     'your_full_name' => 'Your full name',
     'placeholder_full_name' => 'John Doe',
+    'username' => 'Username',
+    'placeholder_username' => 'john_doe',
     'your_email_address' => 'Your email address',
     'placeholder_email' => 'john@gmail.com',
     'your_question' => 'Your question',

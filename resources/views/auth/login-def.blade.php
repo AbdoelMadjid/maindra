@@ -31,7 +31,7 @@
                         <!-- Contact Form -->
                         <form id="unify_sign_in_form" action="{{ route('login') }}" method="POST" novalidate="novalidate">
                             @php
-                                $emailHasError = $errors->has('email');
+                                $usernameHasError = $errors->has('username');
                                 $passwordHasError = $errors->has('password');
                             @endphp
                             @csrf
@@ -58,7 +58,7 @@
                                 <div class="u-shadow-v35 g-bg-white rounded g-px-40 g-py-50">
                                     <div class="g-mb-20">
                                         <label
-                                            class="g-color-text-light-v1 g-font-weight-500">{{ __('education.email') }}</label>
+                                            class="g-color-text-light-v1 g-font-weight-500">{{ __('education.username') }}</label>
                                         <div class="input-group">
                                             <span
                                                 class="input-group-prepend g-width-50 g-brd-secondary-light-v2 g-bg-secondary g-rounded-right-0">
@@ -68,14 +68,14 @@
                                                 </div>
                                             </span>
                                             <input
-                                                class="form-control g-brd-secondary-light-v2 g-bg-secondary g-bg-secondary-dark-v1--focus g-rounded-left-0 g-px-20 g-py-12 @if ($emailHasError) is-invalid @endif"
-                                                type="email" id="emailInput" name="email" autocomplete="off"
-                                                value="{{ old('email') }}"
-                                                placeholder="{{ __('education.placeholder_email') }}">
+                                                class="form-control g-brd-secondary-light-v2 g-bg-secondary g-bg-secondary-dark-v1--focus g-rounded-left-0 g-px-20 g-py-12 @if ($usernameHasError) is-invalid @endif"
+                                                type="text" id="usernameInput" name="username" autocomplete="username"
+                                                value="{{ old('username') }}"
+                                                placeholder="{{ __('education.placeholder_username') }}">
                                         </div>
-                                        <div id="emailFieldError"
-                                            class="invalid-feedback @if ($emailHasError) d-block @endif">
-                                            {{ $errors->first('email') }}
+                                        <div id="usernameFieldError"
+                                            class="invalid-feedback @if ($usernameHasError) d-block @endif">
+                                            {{ $errors->first('username') }}
                                         </div>
                                     </div>
 
@@ -343,12 +343,12 @@
             $.HSCore.components.HSGoTo.init('.js-go-to');
 
             // Signin Tab
-            const emailInput = document.getElementById('emailInput');
+            const usernameInput = document.getElementById('usernameInput');
             const passwordInput = document.getElementById('passwordInput');
             const togglePassword = document.getElementById('togglePassword');
             const togglePasswordIcon = document.getElementById('togglePasswordIcon');
             const form = document.getElementById('unify_sign_in_form');
-            const emailFieldError = document.getElementById('emailFieldError');
+            const usernameFieldError = document.getElementById('usernameFieldError');
             const passwordFieldError = document.getElementById('passwordFieldError');
 
             togglePassword.addEventListener('click', function() {
@@ -368,20 +368,14 @@
                 feedback.classList.remove('d-block');
             }
 
-            function validateEmailInline() {
-                const value = emailInput.value.trim();
+            function validateUsernameInline() {
+                const value = usernameInput.value.trim();
                 if (value.length === 0) {
-                    setFieldError(emailInput, emailFieldError, @json(__('auth.js.email_required')));
+                    setFieldError(usernameInput, usernameFieldError, @json(__('auth.js.username_required')));
                     return false;
                 }
 
-                const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-                if (!isValid) {
-                    setFieldError(emailInput, emailFieldError, @json(__('auth.js.invalid_email')));
-                    return false;
-                }
-
-                clearFieldError(emailInput, emailFieldError);
+                clearFieldError(usernameInput, usernameFieldError);
                 return true;
             }
 
@@ -395,15 +389,15 @@
                 return true;
             }
 
-            emailInput.addEventListener('input', validateEmailInline);
-            emailInput.addEventListener('blur', validateEmailInline);
+            usernameInput.addEventListener('input', validateUsernameInline);
+            usernameInput.addEventListener('blur', validateUsernameInline);
             passwordInput.addEventListener('input', validatePasswordInline);
             passwordInput.addEventListener('blur', validatePasswordInline);
 
             form.addEventListener('submit', function(e) {
-                const validEmail = validateEmailInline();
+                const validUsername = validateUsernameInline();
                 const validPassword = validatePasswordInline();
-                if (!validEmail || !validPassword) {
+                if (!validUsername || !validPassword) {
                     e.preventDefault();
                 }
             });

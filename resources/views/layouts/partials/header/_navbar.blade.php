@@ -107,15 +107,7 @@
         @php
             $assetBase = $theme_asset_base ?? 'assets';
             $authUser = auth()->user();
-            $avatar =
-                $authUser?->profile_photo_url ??
-                ($authUser?->avatar_url ??
-                    ((isset($authUser?->avatar) && is_string($authUser->avatar)
-                        ? (str_starts_with($authUser->avatar, 'http')
-                            ? $authUser->avatar
-                            : asset(ltrim($authUser->avatar, '/')))
-                        : null) ??
-                        asset($assetBase . '/media/avatars/300-1.jpg')));
+            $avatar = userAvatarUrl($authUser, $assetBase);
         @endphp
         <div class="cursor-pointer symbol symbol-35px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
             data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">

@@ -48,7 +48,7 @@
                         <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="{{ route('login') }}"
                             method="POST">
                             @php
-                                $emailHasError = $errors->has('email');
+                                $usernameHasError = $errors->has('username');
                                 $passwordHasError = $errors->has('password');
                             @endphp
                             @csrf
@@ -85,13 +85,14 @@
                             <!--begin::Input group=-->
                             <div class="fv-row mb-8">
                                 <!--begin::Email-->
-                                <input type="email" id="emailInput" placeholder="Email" name="email" autocomplete="off"
-                                    class="form-control bg-transparent @if ($emailHasError) is-invalid @endif"
-                                    value="{{ old('email') }}" />
+                                <input type="text" id="usernameInput" placeholder="{{ __('auth.username') }}" name="username"
+                                    autocomplete="username"
+                                    class="form-control bg-transparent @if ($usernameHasError) is-invalid @endif"
+                                    value="{{ old('username') }}" />
                                 <!--end::Email-->
-                                <div id="emailFieldError"
-                                    class="invalid-feedback @if ($emailHasError) d-block @endif">
-                                    {{ $errors->first('email') }}
+                                <div id="usernameFieldError"
+                                    class="invalid-feedback @if ($usernameHasError) d-block @endif">
+                                    {{ $errors->first('username') }}
                                 </div>
                             </div>
                             <!--end::Input group=-->
@@ -254,16 +255,16 @@
     <!--end::Custom Javascript-->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const emailInput = document.getElementById('emailInput');
+            const usernameInput = document.getElementById('usernameInput');
             const passwordInput = document.getElementById('passwordInput');
             const togglePassword = document.getElementById('togglePassword');
             const togglePasswordIconOff = document.getElementById('togglePasswordIconOff');
             const togglePasswordIconOn = document.getElementById('togglePasswordIconOn');
             const form = document.getElementById('kt_sign_in_form');
-            const emailFieldError = document.getElementById('emailFieldError');
+            const usernameFieldError = document.getElementById('usernameFieldError');
             const passwordFieldError = document.getElementById('passwordFieldError');
 
-            if (!form || !emailInput || !passwordInput || !emailFieldError || !passwordFieldError) {
+            if (!form || !usernameInput || !passwordInput || !usernameFieldError || !passwordFieldError) {
                 return;
             }
 
@@ -287,20 +288,14 @@
                 feedback.classList.remove('d-block');
             }
 
-            function validateEmailInline() {
-                const value = emailInput.value.trim();
+            function validateUsernameInline() {
+                const value = usernameInput.value.trim();
                 if (value.length === 0) {
-                    setFieldError(emailInput, emailFieldError, @json(__('auth.js.email_required')));
+                    setFieldError(usernameInput, usernameFieldError, @json(__('auth.js.username_required')));
                     return false;
                 }
 
-                const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-                if (!isValid) {
-                    setFieldError(emailInput, emailFieldError, @json(__('auth.js.invalid_email')));
-                    return false;
-                }
-
-                clearFieldError(emailInput, emailFieldError);
+                clearFieldError(usernameInput, usernameFieldError);
                 return true;
             }
 
@@ -314,15 +309,15 @@
                 return true;
             }
 
-            emailInput.addEventListener('input', validateEmailInline);
-            emailInput.addEventListener('blur', validateEmailInline);
+            usernameInput.addEventListener('input', validateUsernameInline);
+            usernameInput.addEventListener('blur', validateUsernameInline);
             passwordInput.addEventListener('input', validatePasswordInline);
             passwordInput.addEventListener('blur', validatePasswordInline);
 
             form.addEventListener('submit', function(e) {
-                const validEmail = validateEmailInline();
+                const validUsername = validateUsernameInline();
                 const validPassword = validatePasswordInline();
-                if (!validEmail || !validPassword) {
+                if (!validUsername || !validPassword) {
                     e.preventDefault();
                 }
             });

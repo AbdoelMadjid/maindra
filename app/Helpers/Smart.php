@@ -278,3 +278,39 @@ if (!function_exists('kontrasTeks')) {
         return $luminance > 0.5 ? '#000' : '#fff';
     }
 }
+
+if (!function_exists('userAvatarUrl')) {
+    function userAvatarUrl($user = null, ?string $assetBase = null): string
+    {
+        $assetBase = $assetBase ?: 'assets';
+        $user = $user ?: Auth::user();
+
+        $fallback = asset($assetBase . '/media/avatars/blank.png');
+        if (! $user) {
+            return $fallback;
+        }
+
+        if (! empty($user->profile_photo_url)) {
+            return $user->profile_photo_url;
+        }
+
+        if (! empty($user->avatar_url)) {
+            return $user->avatar_url;
+        }
+
+        if (isset($user->avatar) && is_string($user->avatar) && trim($user->avatar) !== '') {
+            $avatar = trim($user->avatar);
+            if (str_starts_with($avatar, 'http')) {
+                return $avatar;
+            }
+
+            if (str_contains($avatar, '/')) {
+                return asset(ltrim($avatar, '/'));
+            }
+
+            return asset('images/users/' . $avatar);
+        }
+
+        return $fallback;
+    }
+}

@@ -35,6 +35,7 @@
                             novalidate="novalidate">
                             @php
                                 $nameHasError = $errors->has('name');
+                                $usernameHasError = $errors->has('username');
                                 $emailHasError = $errors->has('email');
                                 $passwordHasError = $errors->has('password');
                                 $passwordConfirmationHasError = $errors->has('password_confirmation');
@@ -82,6 +83,28 @@
                                 </div>
 
                                 <div class="g-mb-20">
+                                    <label class="g-color-text-light-v1 g-font-weight-500">{{ __('education.username') }}</label>
+                                    <div class="input-group">
+                                        <span
+                                            class="input-group-prepend g-width-50 g-brd-secondary-light-v2 g-bg-secondary g-rounded-right-0">
+                                            <div
+                                                class="input-group-text justify-content-center w-100 g-bg-secondary g-brd-secondary-light-v2">
+                                                <i class="icon-finance-067 u-line-icon-pro"></i>
+                                            </div>
+                                        </span>
+                                        <input
+                                            class="form-control g-brd-secondary-light-v2 g-bg-secondary g-bg-secondary-dark-v1--focus g-rounded-left-0 g-px-20 g-py-12 @if ($usernameHasError) is-invalid @endif"
+                                            type="text" id="usernameInput" name="username" autocomplete="username"
+                                            value="{{ old('username') }}"
+                                            placeholder="{{ __('education.placeholder_username') }}">
+                                    </div>
+                                    <div id="usernameFieldError"
+                                        class="invalid-feedback @if ($usernameHasError) d-block @endif">
+                                        {{ $errors->first('username') }}
+                                    </div>
+                                </div>
+
+                                <div class="g-mb-20">
                                     <label
                                         class="g-color-text-light-v1 g-font-weight-500">{{ __('education.email') }}</label>
                                     <div class="input-group">
@@ -94,7 +117,7 @@
                                         </span>
                                         <input
                                             class="form-control g-brd-secondary-light-v2 g-bg-secondary g-bg-secondary-dark-v1--focus g-rounded-left-0 g-px-20 g-py-12 @if ($emailHasError) is-invalid @endif"
-                                            type="email" id="emailInput" name="email" autocomplete="username"
+                                            type="email" id="emailInput" name="email" autocomplete="email"
                                             value="{{ old('email') }}"
                                             placeholder="{{ __('education.placeholder_email') }}">
                                     </div>
@@ -239,10 +262,12 @@
             $.HSCore.components.HSGoTo.init('.js-go-to');
 
             const nameInput = document.getElementById('nameInput');
+            const usernameInput = document.getElementById('usernameInput');
             const emailInput = document.getElementById('emailInput');
             const passwordInput = document.getElementById('passwordInput');
             const passwordConfirmationInput = document.getElementById('passwordConfirmationInput');
             const form = document.getElementById('unify_register_form');
+            const usernameFieldError = document.getElementById('usernameFieldError');
             const emailFieldError = document.getElementById('emailFieldError');
             const passwordFieldError = document.getElementById('passwordFieldError');
             const passwordConfirmationFieldError = document.getElementById('passwordConfirmationFieldError');
@@ -281,6 +306,17 @@
                 return true;
             }
 
+            function validateUsernameInline() {
+                const value = usernameInput.value.trim();
+                if (value.length === 0) {
+                    setFieldError(usernameInput, usernameFieldError, @json(__('auth.js.username_required')));
+                    return false;
+                }
+
+                clearFieldError(usernameInput, usernameFieldError);
+                return true;
+            }
+
             function validatePasswordInline() {
                 if (passwordInput.value.length === 0) {
                     setFieldError(passwordInput, passwordFieldError, @json(__('auth.js.password_required')));
@@ -315,6 +351,8 @@
                     nameInput.setSelectionRange(cursorPos, cursorPos);
                 }
             });
+            usernameInput.addEventListener('input', validateUsernameInline);
+            usernameInput.addEventListener('blur', validateUsernameInline);
             emailInput.addEventListener('input', validateEmailInline);
             emailInput.addEventListener('blur', validateEmailInline);
             passwordInput.addEventListener('input', function() {
@@ -326,10 +364,11 @@
             passwordConfirmationInput.addEventListener('blur', validatePasswordConfirmationInline);
 
             form.addEventListener('submit', function(e) {
+                const validUsername = validateUsernameInline();
                 const validEmail = validateEmailInline();
                 const validPassword = validatePasswordInline();
                 const validPasswordConfirmation = validatePasswordConfirmationInline();
-                if (!validEmail || !validPassword || !validPasswordConfirmation) {
+                if (!validUsername || !validEmail || !validPassword || !validPasswordConfirmation) {
                     e.preventDefault();
                 }
             });

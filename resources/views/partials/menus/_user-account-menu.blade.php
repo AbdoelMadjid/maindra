@@ -2,15 +2,7 @@
     $isAltMenu = false;
     $assetBase = $theme_asset_base ?? 'assets';
     $authUser = auth()->user();
-    $fallbackAvatar =
-        $authUser?->profile_photo_url ??
-        ($authUser?->avatar_url ??
-            ((isset($authUser?->avatar) && is_string($authUser->avatar)
-                ? (str_starts_with($authUser->avatar, 'http')
-                    ? $authUser->avatar
-                    : asset(ltrim($authUser->avatar, '/')))
-                : null) ??
-                asset($assetBase . '/media/avatars/300-1.jpg')));
+    $fallbackAvatar = userAvatarUrl($authUser, $assetBase);
     $profileAvatar = $current_user_display['avatar'] ?? $fallbackAvatar;
     $profileName = $current_user_display['name'] ?? ($authUser?->name ?? 'Guest User');
     $profileEmail = $current_user_display['email'] ?? ($authUser?->email ?? '');

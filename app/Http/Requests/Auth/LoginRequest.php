@@ -29,7 +29,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'username' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }
@@ -42,8 +42,7 @@ class LoginRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => __('auth.validation.email_required'),
-            'email.email' => __('auth.validation.email_email'),
+            'username.required' => __('auth.validation.username_required'),
             'password.required' => __('auth.validation.password_required'),
         ];
     }
@@ -57,14 +56,14 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        $email = $this->string('email')->toString();
+        $username = $this->string('username')->toString();
         $password = $this->string('password')->toString();
-        $user = User::where('email', $email)->first();
+        $user = User::where('username', $username)->first();
 
         if (! $user) {
             RateLimiter::hit($this->throttleKey());
             throw ValidationException::withMessages([
-                'email' => __('auth.validation.email_not_found'),
+                'username' => __('auth.validation.username_not_found'),
             ]);
         }
 
@@ -96,7 +95,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
+            'username' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -108,6 +107,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('username')).'|'.$this->ip());
     }
 }

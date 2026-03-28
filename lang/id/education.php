@@ -117,6 +117,8 @@ return [
     'contacts_intro' => 'Tim kami siap menjawab pertanyaan Anda. Isi formulir dan kami akan segera menghubungi Anda.',
     'your_full_name' => 'Nama lengkap Anda',
     'placeholder_full_name' => 'John Doe',
+    'username' => 'Username',
+    'placeholder_username' => 'john_doe',
     'your_email_address' => 'Alamat email Anda',
     'placeholder_email' => 'john@gmail.com',
     'your_question' => 'Pertanyaan Anda',

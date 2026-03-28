@@ -23,7 +23,8 @@ class UserSeeder extends Seeder
 
         foreach ($users as $value) {
             User::create([...$default, ...[
-                'name' => $value,
+                'name' => Str::title($value),
+                'username' => $value,
                 'email' => $value . '@gmail.com',
             ]])->assignRole($value);
         }
