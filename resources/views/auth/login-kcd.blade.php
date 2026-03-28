@@ -28,12 +28,12 @@
                 <div class="d-flex flex-center flex-lg-start flex-column">
                     <!--begin::Logo-->
                     <a href="index" class="mb-7">
-                        <img alt="Logo" src="assets/media/logos/custom-3.svg" />
+                        <img alt="Logo" src="images/logo/maindra-default.png" />
                     </a>
                     <!--end::Logo-->
                     <!--begin::Title-->
                     <h2 class="text-white fw-normal m-0">
-                        Manajemen Informasi Data dan Regulasi KCD 9
+                        Manajemen Informasi Data dan Regulasi
                     </h2>
                     <!--end::Title-->
                 </div>
@@ -48,9 +48,8 @@
                     <!--begin::Wrapper-->
                     <div class="d-flex flex-center flex-column flex-column-fluid px-lg-10 pb-15 pb-lg-20">
                         <!--begin::Form-->
-                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"
-                            action="{{ route('login') }}" method="POST"
-                            data-has-server-errors="{{ $errors->any() ? '1' : '0' }}">
+                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="{{ route('login') }}"
+                            method="POST" data-has-server-errors="{{ $errors->any() ? '1' : '0' }}">
                             @php
                                 $usernameHasError = $errors->has('username');
                                 $passwordHasError = $errors->has('password');
@@ -89,8 +88,8 @@
                             <!--begin::Input group=-->
                             <div class="fv-row mb-8">
                                 <!--begin::Email-->
-                                <input type="text" id="usernameInput" placeholder="{{ __('auth.username') }}" name="username"
-                                    autocomplete="username"
+                                <input type="text" id="usernameInput" placeholder="{{ __('auth.username') }}"
+                                    name="username" autocomplete="username"
                                     class="form-control bg-transparent @if ($usernameHasError) is-invalid @endif"
                                     value="{{ old('username') }}" />
                                 <!--end::Email-->
@@ -110,10 +109,8 @@
                                     class="btn border-0 shadow-none bg-transparent position-absolute @if ($errors->any()) d-none @endif"
                                     style="right: 6px; top: 50%; transform: translateY(-50%); z-index: 3; padding: 4px;"
                                     aria-label="Toggle password visibility">
-                                    <i id="togglePasswordIconOff"
-                                        class="bi bi-eye-slash fs-4 password-toggle-icon"></i>
-                                    <i id="togglePasswordIconOn"
-                                        class="bi bi-eye fs-4 d-none password-toggle-icon"></i>
+                                    <i id="togglePasswordIconOff" class="bi bi-eye-slash fs-4 password-toggle-icon"></i>
+                                    <i id="togglePasswordIconOn" class="bi bi-eye fs-4 d-none password-toggle-icon"></i>
                                 </button>
                                 <!--end::Password-->
                                 <div id="passwordFieldError"

@@ -6,13 +6,13 @@
             {{-- Light-sidebar --}}
             <img alt="Logo" src="assets/media/logos/default.svg"
                 class="h-25px app-sidebar-logo-default theme-light-show" />
-            <img alt="Logo" src="assets/media/logos/default-dark.svg"
+            <img alt="Logo" src="images/logo/maindra-dark.png"
                 class="h-25px app-sidebar-logo-default theme-dark-show" />
-            <img alt="Logo" src="assets/media/logos/default-small.svg" class="h-20px app-sidebar-logo-minimize" />
+            <img alt="Logo" src="images/logo/maindra-small-2.png" class="h-25px app-sidebar-logo-minimize" />
         @else
             {{-- Default: dark-sidebar --}}
-            <img alt="Logo" src="assets/media/logos/default-dark.svg" class="h-25px app-sidebar-logo-default" />
-            <img alt="Logo" src="assets/media/logos/default-small.svg" class="h-20px app-sidebar-logo-minimize" />
+            <img alt="Logo" src="images/logo/maindra-dark.png" class="h-45px app-sidebar-logo-default" />
+            <img alt="Logo" src="images/logo/maindra-small-2.png" class="h-25px app-sidebar-logo-minimize" />
         @endif
     </a>
     <!--end::Logo image-->
@@ -31,11 +31,9 @@
         data-kt-toggle-name="app-sidebar-minimize">
         <i class="ki-duotone ki-black-left-line fs-3 rotate-180">
             <span class="path1"></span>
-            <span
-                class="path2"></span>
-            </i>
+            <span class="path2"></span>
+        </i>
     </div>
     <!--end::Sidebar toggle-->
 </div>
 <!--end::Logo-->
-
